@@ -34,10 +34,12 @@ public class HTMLFetcher {
 		final URLConnection conn = url.openConnection();
 		final String ct = conn.getContentType();
 
-		if (ct == null
-				|| !(ct.equals("text/html") || ct.startsWith("text/html;"))) {
-			throw new IOException("Unsupported content type: "+ct);
-		}
+		System.out.println(url.toString());
+
+		//if (ct == null
+		//		|| !(ct.equals("text/html") || ct.startsWith("text/html;"))) {
+		//	throw new IOException("Unsupported content type: "+ct);
+		//}
 
 		Charset cs = Charset.forName("Cp1252");
 		if (ct != null) {
