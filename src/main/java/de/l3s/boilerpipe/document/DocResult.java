@@ -11,5 +11,6 @@ public class DocResult {
     public String ampUrl;
     public String url;
     public String content;
+    public String sanitizedHtml;
     public String image;
 }

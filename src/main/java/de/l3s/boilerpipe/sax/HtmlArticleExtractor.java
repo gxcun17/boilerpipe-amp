@@ -24,6 +24,7 @@ import de.l3s.boilerpipe.BoilerpipeExtractor;
 import de.l3s.boilerpipe.BoilerpipeProcessingException;
 import de.l3s.boilerpipe.document.DocResult;
 import de.l3s.boilerpipe.document.TextDocument;
+import de.l3s.boilerpipe.extractors.ArticleExtractor;
 import net.htmlparser.jericho.*;
 import org.apache.commons.lang3.StringUtils;
 import org.xml.sax.InputSource;
@@ -82,7 +83,6 @@ public class HtmlArticleExtractor {
             return "";
         }
 
-
         DocResult result = new DocResult();
         result.ampUrl = ampUrl.toString();
         result.url = url.toString();
@@ -101,8 +101,10 @@ public class HtmlArticleExtractor {
             final InputSource is = htmlDoc.toInputSource();
             text = hh.process(doc, is);
 
-            result.content =  removeNotAllowedTags(text, ampUrl.toURI());
-            //result.content = process(htmlDoc, ampUrl.toURI(), extractor);
+            result.sanitizedHtml =  removeNotAllowedTags(text, ampUrl.toURI());
+
+            ArticleExtractor textExtractor = ArticleExtractor.INSTANCE;
+            result.content = textExtractor.getText(htmlDoc.toInputSource());
 
             AmpImageExtractor imagExtractor = AmpImageExtractor.INSTANCE;
             imagExtractor.parse(htmlDoc.toInputSource());
